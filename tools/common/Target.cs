@@ -91,10 +91,19 @@ namespace Xamarin.Bundler {
 			}
 
 #if MTOUCH
-			if (!App.OnlyStaticLibraries && Assemblies.Count ((v) => v.HasLinkWithAttributes) > 1) {
-				ErrorHelper.Warning (127, "Incremental builds have been disabled because this version of Xamarin.iOS does not support incremental builds in projects that include more than one third-party binding libraries.");
-				App.ClearAssemblyBuildTargets (); // the default is to compile to static libraries, so just revert to the default.
-			}
+			ErrorHelper.Warning(127, "Test Start");
+			ErrorHelper.Warning(127, "App.OnlyStaticLibraries: " + App.OnlyStaticLibraries);
+			ErrorHelper.Warning(127, "Assemblies.Count ((v) => v.HasLinkWithAttributes): " + Assemblies.Count((v) => v.HasLinkWithAttributes));
+			foreach (var assembly in Assemblies.Where ((v) => (v.HasLinkWithAttributes)))
+			{
+				ErrorHelper.Warning (127, assembly.FileName);
+			}		
+			ErrorHelper.Warning(127, "Test End");
+
+			//if (!App.OnlyStaticLibraries && Assemblies.Count ((v) => v.HasLinkWithAttributes) > 1) {
+			//	ErrorHelper.Warning (127, "Incremental builds have been disabled because this version of Xamarin.iOS does not support incremental builds in projects that include more than one third-party binding libraries.");
+			//	App.ClearAssemblyBuildTargets (); // the default is to compile to static libraries, so just revert to the default.
+			//}
 #endif
 		}
 
